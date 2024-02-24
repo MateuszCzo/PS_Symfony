@@ -1,0 +1,13 @@
+{
+  "name": "mateuszczosnyka/symfonymodule",
+  "description": "A learning module.",
+  "autoload": {
+    "psr-4": {
+      "SymfonyModule\\Controller\\": "src/controller/"
+    }
+  },
+  "config": {
+      "prepend-autoloader": false
+  },
+  "type": "prestashop-module"
+}

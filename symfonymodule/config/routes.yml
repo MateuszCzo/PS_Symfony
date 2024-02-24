@@ -1,0 +1,5 @@
+symfony_module_demo:
+  path: symfonymodule/demo
+  methods: [GET]
+  defaults:
+    _controller: 'SymfonyModule\Controller\DemoController::demoAction'
