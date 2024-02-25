@@ -1,0 +1,27 @@
+{% extends "@PrestaShop/Admin/layout.html.twig" %}
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Customer Name</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for youtube in data %}
+            <tr>
+                <td>{{ youtube.productId }}</td>
+                <td>{{ youtube.customerName }}</td>
+                <td>{{ youtube.title }}</td>
+                <td>{{ youtube.content }}</td>
+                <td>{{ youtube.grade }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

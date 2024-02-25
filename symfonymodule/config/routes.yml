@@ -8,3 +8,8 @@ youtube_create:
   methods: [GET, POST]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::createAction'
+youtube_list:
+  path: youtuber/list
+  methods: [GET]
+  defaults:
+    _controller: 'SymfonyModule\Controller\YoutubeController::listAction'

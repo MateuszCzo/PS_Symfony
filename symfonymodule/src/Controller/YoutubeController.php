@@ -35,12 +35,18 @@ class YoutubeController extends FrameworkBundleAdminController
             $em->flush();
         }
 
-        $sql = 'SELECT * FROM ' . _DB_PREFIX_ . 'youtube_comment';
-        $dbData = json_encode(Db::getInstance()->executeS($sql));
-
         return $this->render('@Modules/symfonymodule/templates/admin/create.html.twig', [
             'form' => $form->createView(),
-            'dbData' => $dbData,
+        ]);
+    }
+
+    public function listAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository(YoutubeComment::class)->findAll();
+
+        return $this->render('@Modules/symfonymodule/templates/admin/list.html.twig', [
+            'data' => $data,
         ]);
     }
 }
