@@ -44,7 +44,7 @@ class SymfonyModule extends Module
     public function install()
     {
         $sql = '
-            CREATE TABLE IF NOT EXISTS' . _DB_PREFIX_ . 'youtube_comment ( 
+            CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'youtube_comment ( 
                 id_product_comment INT AUTO_INCREMENT NOT NULL, 
                 id_product INT NOT NULL, 
                 customer_name VARCHAR(64) NOT NULL, 
@@ -62,7 +62,7 @@ class SymfonyModule extends Module
 
     public function uninstall()
     {
-        $sql = 'DROP TABLE IF EXISTS' . _DB_PREFIX_ . 'youtube_comment';
+        $sql = 'DROP TABLE IF EXISTS ' . _DB_PREFIX_ . 'youtube_comment';
         return parent::uninstall() && 
             Db::getInstance()->execute($sql);
     }
