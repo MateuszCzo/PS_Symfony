@@ -5,29 +5,54 @@ namespace SymfonyModule\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class YoutubeType extends AbstractType
 {
-    public function build(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
+            ->add('id_product_comment', HiddenType::class, [
                 'attr' => [
-                    'placeholder' => 'The name'
+                    'placeholder' => 'The id_product_comment'
                 ]
             ])
-            ->add('description', TextType::class, [
+            ->add('id_product', NumberType::class, [
                 'attr' => [
-                    'placeholder' => 'The description'
+                    'placeholder' => 'The product id'
                 ]
             ])
-            ->add('price', NumberType::class, [
+            ->add('customer_name', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'The price'
+                    'placeholder' => 'The customer name'
+                ]
+            ])
+            ->add('title', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'The title'
+                ]
+            ])
+            ->add('content', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'The content'
+                ]
+            ])
+            ->add('grade', NumberType::class, [
+                'attr' => [
+                    'placeholder' => 'The grade'
                 ]
             ])
             ->add('save', SubmitType::class);
     }
+
+    /*
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => YoutubeComment::class,
+        ]);
+    }
+    */
 }

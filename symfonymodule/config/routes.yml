@@ -5,6 +5,6 @@ symfony_module_demo:
     _controller: 'SymfonyModule\Controller\DemoController::demoAction'
 youtube_create:
   path: youtuber/create
-  methods: [GET]
+  methods: [GET, POST]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::createAction'

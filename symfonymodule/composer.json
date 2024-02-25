@@ -3,11 +3,14 @@
   "description": "A learning module.",
   "autoload": {
     "psr-4": {
-      "SymfonyModule\\Controller\\": "src/Controller/"
+      "SymfonyModule\\": "src/"
     }
   },
   "config": {
       "prepend-autoloader": false
   },
-  "type": "prestashop-module"
+  "type": "prestashop-module",
+  "require": {
+    "symfony/form": "^7.0"
+  }
 }
