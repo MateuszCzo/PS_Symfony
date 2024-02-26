@@ -1,6 +1,14 @@
 {% extends "@PrestaShop/Admin/layout.html.twig" %}
 {% block content %}
 
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
 <table class="table">
     <thead>
         <tr>
@@ -8,7 +16,8 @@
             <th>Customer Name</th>
             <th>Title</th>
             <th>Content</th>
-            <th>grade</th>
+            <th>Grade</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +28,10 @@
                 <td>{{ youtube.title }}</td>
                 <td>{{ youtube.content }}</td>
                 <td>{{ youtube.grade }}</td>
+                <td>
+                    <a href="{{ path('youtube_update', {id: youtube.id}) }}" class="btn btn-primary">Updata</a>
+                    <a href="{{ path('youtube_delete', {id: youtube.id}) }}" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

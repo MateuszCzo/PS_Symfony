@@ -13,3 +13,13 @@ youtube_list:
   methods: [GET]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::listAction'
+youtube_delete:
+  path: youtuber/delete/{id}
+  methods: [GET]
+  defaults:
+    _controller: 'SymfonyModule\Controller\YoutubeController::deleteAction'
+youtube_update:
+  path: youtuber/update/{id}
+  methods: [GET, POST]
+  defaults:
+    _controller: 'SymfonyModule\Controller\YoutubeController::updateAction'

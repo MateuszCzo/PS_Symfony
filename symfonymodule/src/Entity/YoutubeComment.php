@@ -64,6 +64,18 @@ class YoutubeComment
     }
 
     /**
+     * @param int $id
+     *
+     * @return ProductComment
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getProductId()

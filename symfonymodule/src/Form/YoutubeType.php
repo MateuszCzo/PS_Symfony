@@ -14,17 +14,17 @@ class YoutubeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_product_comment', HiddenType::class, [
+            ->add('id', HiddenType::class, [
                 'attr' => [
                     'placeholder' => 'The id_product_comment'
                 ]
             ])
-            ->add('id_product', NumberType::class, [
+            ->add('productId', NumberType::class, [
                 'attr' => [
                     'placeholder' => 'The product id'
                 ]
             ])
-            ->add('customer_name', TextType::class, [
+            ->add('customerName', TextType::class, [
                 'attr' => [
                     'placeholder' => 'The customer name'
                 ]
