@@ -2,107 +2,95 @@
 
 namespace SymfonyModule\Controller;
 
-use SymfonyModule\Form\YoutubeType;
 use SymfonyModule\Entity\YoutubeComment;
-
-use Db;
-
+use SymfonyModule\Form\YoutubeType;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class YoutubeController extends FrameworkBundleAdminController
 {   
-    public function createAction(Request $request)
+    public function createAction(Request $request): Response
     {
-        //$form = $this->createForm(YoutubeType::class, YoutubeComment object);
-        $form = $this->createForm(YoutubeType::class);
+        $youtubeComment = new YoutubeComment();
+ 
+        $form = $this->createForm(YoutubeType::class, $youtubeComment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            //$youtubeComment = $form->getData();
-            //$youtubeComment->save();
-            $youtubeComment = new YoutubeComment();
-            $youtubeComment->setProductId(      $form->get('productId')->getData());
-            $youtubeComment->setCustomerName(   $form->get('customerName')->getData());
-            $youtubeComment->setTitle(          $form->get('title')->getData());
-            $youtubeComment->setContent(        $form->get('content')->getData());
-            $youtubeComment->setGrade(          $form->get('grade')->getData());
-            $em->persist($youtubeComment);
-            $em->flush();
-            $this->addFlash(
-                'notice',
-                'Youtube comment created successfuly.'
-            );
-            return $this->redirectToRoute('youtube_list');
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($youtubeComment);
+            $entityManager->flush();
+
+            $this->addFlash('notice', $this->trans('Youtube comment created successfuly.', 'Modules.SymfonyModule.YoutubeController'));
+
+            return $this->redirectToRoute('symfonymodule_youtube_list');
         }
 
-        return $this->render('@Modules/symfonymodule/templates/admin/create.html.twig', [
+        return $this->render('@Modules/symfonymodule/views/templates/admin/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    public function listAction()
+    public function listAction(): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $data = $em->getRepository(YoutubeComment::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->render('@Modules/symfonymodule/templates/admin/list.html.twig', [
-            'data' => $data,
+        $youtubeComments = $entityManager->getRepository(YoutubeComment::class)->findAll();
+
+        return $this->render('@Modules/symfonymodule/views/templates/admin/list.html.twig', [
+            'youtubeComments' => $youtubeComments,
         ]);
     }
 
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $youtubeComment = $em->getRepository(YoutubeComment::class)->find($id);
-        if ($youtubeComment) {
-            $em->remove($youtubeComment);
-            $em->flush();
-        }
-        $this->addFlash(
-            'notice',
-            'Your changes were saved!'
-        );
+        $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->redirectToRoute('youtube_list');
+        $youtubeComment = $entityManager->getRepository(YoutubeComment::class)->find($id);
+
+        if ($youtubeComment) {
+            $entityManager->remove($youtubeComment);
+            $entityManager->flush();
+        }
+        $this->addFlash('notice', $this->trans('Your changes were saved.', 'Modules.SymfonyModule.YoutubeController'));
+
+        return $this->redirectToRoute('symfonymodule_youtube_list');
     }
 
-    public function updateAction(Request $request, int $id)
+    public function updateAction(Request $request, int $id): Response
     {
         if ($id === null) {
-            $this->addFlash(
-                'notice',
-                'No id given.'
-            );
-            return $this->redirectToRoute('youtube_list');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $youtubeComment = $em->getRepository(YoutubeComment::class)->find($id);
-        if (!$youtubeComment) {
-            $this->addFlash(
-                'notice',
-                'No youtube comment found.'
-            );
-            return $this->redirectToRoute('youtube_list');
-        }
-        $form = $this->createForm(YoutubeType::class, $youtubeComment);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $youtubeComment->setProductId(      $form->get('productId')->getData());
-            $youtubeComment->setCustomerName(   $form->get('customerName')->getData());
-            $youtubeComment->setTitle(          $form->get('title')->getData());
-            $youtubeComment->setContent(        $form->get('content')->getData());
-            $youtubeComment->setGrade(          $form->get('grade')->getData());
-            $em->flush();
-            $this->addFlash(
-                'notice',
-                'Youtube comment updated successfuly.'
-            );
-            return $this->redirectToRoute('youtube_list');
+            $this->addFlash('notice', $this->trans('No id given.', 'Modules.SymfonyModule.YoutubeController'));
+
+            return $this->redirectToRoute('symfonymodule_youtube_list');
         }
 
-        return $this->render('@Modules/symfonymodule/templates/admin/create.html.twig', [
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $youtubeComment = $entityManager->getRepository(YoutubeComment::class)->find($id);
+
+        if (!$youtubeComment) {
+            $this->addFlash('notice', $this->trans('No youtube comment found.', 'Modules.SymfonyModule.YoutubeController'));
+
+            return $this->redirectToRoute('symfonymodule_youtube_list');
+        }
+
+        $form = $this->createForm(YoutubeType::class, $youtubeComment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($youtubeComment);
+            $entityManager->flush();
+
+            $this->addFlash('notice', $this->trans('Youtube comment updated successfuly.', 'Modules.SymfonyModule.YoutubeController'));
+
+            return $this->redirectToRoute('symfonymodule_youtube_list');
+        }
+
+        return $this->render('@Modules/symfonymodule/views/templates/admin/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }

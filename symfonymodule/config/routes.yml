@@ -1,25 +1,20 @@
-symfony_module_demo:
-  path: symfonymodule/demo
-  methods: [GET]
-  defaults:
-    _controller: 'SymfonyModule\Controller\DemoController::demoAction'
-youtube_create:
-  path: youtuber/create
+symfonymodule_youtube_create:
+  path: symfonymodule/youtube/create
   methods: [GET, POST]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::createAction'
-youtube_list:
-  path: youtuber/list
+symfonymodule_youtube_list:
+  path: symfonymodule/youtube/list
   methods: [GET]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::listAction'
-youtube_delete:
-  path: youtuber/delete/{id}
+symfonymodule_youtube_delete:
+  path: symfonymodule/youtube/delete/{id}
   methods: [GET]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::deleteAction'
-youtube_update:
-  path: youtuber/update/{id}
+symfonymodule_youtube_update:
+  path: symfonymodule/youtube/update/{id}
   methods: [GET, POST]
   defaults:
     _controller: 'SymfonyModule\Controller\YoutubeController::updateAction'

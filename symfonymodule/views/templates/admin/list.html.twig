@@ -21,16 +21,16 @@
         </tr>
     </thead>
     <tbody>
-        {% for youtube in data %}
+        {% for youtubeComment in youtubeComments %}
             <tr>
-                <td>{{ youtube.productId }}</td>
-                <td>{{ youtube.customerName }}</td>
-                <td>{{ youtube.title }}</td>
-                <td>{{ youtube.content }}</td>
-                <td>{{ youtube.grade }}</td>
+                <td>{{ youtubeComment.productId }}</td>
+                <td>{{ youtubeComment.customerName }}</td>
+                <td>{{ youtubeComment.title }}</td>
+                <td>{{ youtubeComment.content }}</td>
+                <td>{{ youtubeComment.grade }}</td>
                 <td>
-                    <a href="{{ path('youtube_update', {id: youtube.id}) }}" class="btn btn-primary">Updata</a>
-                    <a href="{{ path('youtube_delete', {id: youtube.id}) }}" class="btn btn-danger">Delete</a>
+                    <a href="{{ path('symfonymodule_youtube_update', {id: youtubeComment.id}) }}" class="btn btn-primary">Updata</a>
+                    <a href="{{ path('symfonymodule_youtube_delete', {id: youtubeComment.id}) }}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         {% endfor %}

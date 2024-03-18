@@ -1,5 +1,5 @@
 <?php
-// modules/yourmodule/src/Entity/ProductComment.php
+
 namespace SymfonyModule\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,67 +18,55 @@ class YoutubeComment
      * @ORM\Column(name="id_product_comment", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var int
      *
      * @ORM\Column(name="id_product", type="integer")
      */
-    private $productId;
+    private ?int $productId = null;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_name", type="string", length=64)
      */
-    private $customerName;
+    private ?string $customerName = null;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=64)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @var string
      *
      * @ORM\Column(name="content", type="text")
      */
-    private $content;
+    private ?string $content = null;
 
     /**
      * @var int
      *
      * @ORM\Column(name="grade", type="integer")
      */
-    private $grade;
+    private ?int $grade = null;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
-     *
-     * @return ProductComment
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
-    public function getProductId()
+    public function getProductId(): ?int
     {
         return $this->productId;
     }
@@ -88,7 +76,7 @@ class YoutubeComment
      *
      * @return ProductComment
      */
-    public function setProductId($productId)
+    public function setProductId(?string $productId): self
     {
         $this->productId = $productId;
 
@@ -98,7 +86,7 @@ class YoutubeComment
     /**
      * @return string
      */
-    public function getCustomerName()
+    public function getCustomerName(): ?string
     {
         return $this->customerName;
     }
@@ -108,7 +96,7 @@ class YoutubeComment
      *
      * @return ProductComment
      */
-    public function setCustomerName($customerName)
+    public function setCustomerName(?string $customerName): self
     {
         $this->customerName = $customerName;
 
@@ -118,7 +106,7 @@ class YoutubeComment
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -128,7 +116,7 @@ class YoutubeComment
      *
      * @return ProductComment
      */
-    public function setTitle($title)
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -138,7 +126,7 @@ class YoutubeComment
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -148,7 +136,7 @@ class YoutubeComment
      *
      * @return ProductComment
      */
-    public function setContent($content)
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
@@ -158,7 +146,7 @@ class YoutubeComment
     /**
      * @return int
      */
-    public function getGrade()
+    public function getGrade(): ?int
     {
         return $this->grade;
     }
@@ -168,7 +156,7 @@ class YoutubeComment
      *
      * @return ProductComment
      */
-    public function setGrade($grade)
+    public function setGrade(?int $grade): self
     {
         $this->grade = $grade;
 
@@ -178,7 +166,7 @@ class YoutubeComment
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): ?array
     {
         return [
             'id_product' => $this->getProductId(),

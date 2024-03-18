@@ -18,12 +18,19 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-if (!defined('_PS_VERSION_')) {
-    exit;
-}
+use SymfonyModule\Hook\DefaultHook;
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
+use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
+use SymfonyModule\Helper\Installer;
 
-class SymfonyModule extends Module
+if (!defined('_PS_VERSION_')) exit;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+class SymfonyModule extends Module implements WidgetInterface
 {
+    private Installer $installer;
+
     public function __construct()
     {
         $this->name = 'symfonymodule';
@@ -35,40 +42,55 @@ class SymfonyModule extends Module
             'min' => '1.7.8',
             'max' => _PS_VERSION_
         ];
-        $this->need_instatnce = 0;
         $this->displayName = $this->trans('Learning module.', [], 'Admin.Symfonymodule.Admin');
         $this->description = $this->trans('Learning module - symfony.', [], 'Admin.Symfonymodule.Module');
+
+        $this->installer = new Installer($this);
+
         parent::__construct();
     }
 
-    public function install()
+    public function install(): bool
     {
-        $sql = '
-            CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'youtube_comment ( 
-                id_product_comment INT AUTO_INCREMENT NOT NULL, 
-                id_product INT NOT NULL, 
-                customer_name VARCHAR(64) NOT NULL, 
-                title VARCHAR(64) NOT NULL, 
-                content LONGTEXT NOT NULL, 
-                grade INT NOT NULL, 
-                PRIMARY KEY(id_product_comment)
-            )
-            DEFAULT CHARACTER SET utf8mb4 
-            COLLATE utf8mb4_unicode_ci 
-            ENGINE = InnoDB;';
         return parent::install() && 
-            Db::getInstance()->execute($sql);
+            $this->installer->registerHooks() &&
+            $this->installer->createDatabase();
     }
 
-    public function uninstall()
+    public function uninstall(): bool
     {
-        $sql = 'DROP TABLE IF EXISTS ' . _DB_PREFIX_ . 'youtube_comment';
         return parent::uninstall() && 
-            Db::getInstance()->execute($sql);
+            $this->installer->dropDatabase();
     }
     
-    public function isUsingNewTranslationSystem()
+    public function isUsingNewTranslationSystem(): bool
     {
         return true;
+    }
+
+    public function getContent()
+    {
+        /** @var Router $router */
+        $router = SymfonyContainer::getInstance()->get('router');
+
+        return Tools::redirectAdmin($router->generate('symfonymodule_youtube_create'));
+    }
+
+    public function renderWidget($hookName, array $configuration)
+    {
+        $className = 'SymfonyModule\Hook\\' . $hookName;
+
+        if (!class_exists($className)) {
+            return (new DefaultHook())->renderHook($this, $configuration);
+        }
+        /** @var HookInterface $hook */
+        $hook = new $className;
+
+        return $hook->renderHook($this, $configuration);
+    }
+
+    public function getWidgetVariables($hookName, array $configuration)
+    {
+        throw new Exception('This function is not used.');
     }
 }
